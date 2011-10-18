@@ -1,0 +1,3 @@
+module Subrails
+  VERSION = "0.0.1"
+end
