@@ -1,4 +1,5 @@
 require 'action_dispatch/routing/mapper'
+require 'uri-subdomain'
 
 module ActionDispatch::Routing::Mapper::Subdomains
 
