@@ -3,8 +3,12 @@ require 'action_dispatch/routing/mapper'
 module ActionDispatch::Routing::Mapper::Subdomains
 
   def subdomain *subdomains, &block
-    subdomain = subdomains.length == 1 ? subdomains.first.to_s : /#{subdomains.join('|')}/
-    constraints(:subdomain => subdomain, &block)
+    subdomains = subdomains.map(&:to_s)
+    if subdomains.length == 1
+      constraints(:subdomain => subdomains.first, &block)
+    else
+      constraints(lambda{ |req| subdomains.include? req.subdomain.to_s }, &block)
+    end
   end
 
   def redirect_to_subdomain subdomain, path='/', &block
