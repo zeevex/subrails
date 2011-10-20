@@ -5,8 +5,13 @@ module ActionDispatch::Routing::Mapper::Subdomains
 
   def subdomain *subdomains, &block
     subdomains = subdomains.map(&:to_s)
+
     if subdomains.length == 1
-      constraints(:subdomain => subdomains.first, &block)
+      constraints(:subdomain => subdomains.first) do
+        defaults(:subdomain => subdomains.first) do
+          yield
+        end
+      end
     else
       constraints(lambda{ |req| subdomains.include? req.subdomain.to_s }, &block)
     end
