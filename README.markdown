@@ -1,7 +1,6 @@
 # Subrails
 
-  Adding better subdomain support to raisl
-
+  Adding better subdomain support to rails 3
 
 # Routing
 
@@ -20,7 +19,15 @@
     end
 
 
-### redirect\_to_subdomain
+### redirect
+
+  subrails makes it easy to redirect to another subdomain
+
+    match 'posts(/:id)' => redirect('blog/posts/%{id}', :subdomain => :www)
 
 
-    match 'posts(/:id)' => redirect_to_subdomain(:www, 'blog/posts/%{id}')
+# Url Helpers
+
+  subrails adds support for the :subdomain => "…" as an option to url_for
+
+    root_url(:subdomain => 'blog')
