@@ -4,30 +4,40 @@
 
 # Routing
 
-## Methods:
+### scoping routes to a subdomain:
 
-### subdomain
-
-    # An alias for constraints :subdomain => 'www' do…
+    # this:
     subdomain :www do
       …
     end
 
-    # An alias for constraints :subdomain => /things|stuff|radsauce/ do…
+    # is equal to this
+    constraints(:subdomain => 'www') do
+      defaults(:subdomain => 'www') do
+        …
+      end
+    end
+
+### scoping routes to multiple subdomains:
+
+    # this:
     subdomain :things, :stuff, :radsauce do
       …
     end
 
+    # is equal to this
+    constraints(lambda{ |req| [:things, :stuff, :radsauce].include? req.subdomain.to_s }) do
+      …
+    end
 
-### redirect
 
-  subrails makes it easy to redirect to another subdomain
+### redirecting to another subdomain
 
     match 'posts(/:id)' => redirect('blog/posts/%{id}', :subdomain => :www)
 
-
 # Url Helpers
 
-  subrails adds support for the :subdomain => "…" as an option to url_for
+### subrails adds support for the :subdomain option to url_for
 
-    root_url(:subdomain => 'blog')
+    root_url                        #=> 'http://www.example.com'
+    root_url(:subdomain => 'blog')  #=> 'http://blog.example.com'
