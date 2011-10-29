@@ -41,3 +41,45 @@
 
     root_url                        #=> 'http://www.example.com'
     root_url(:subdomain => 'blog')  #=> 'http://blog.example.com'
+
+
+# Rspec
+
+  Controller tests that respond to routes that include a subdomain restraint require that your pass
+  :subdomain => '…' as a parameter when requesting an action.
+
+### For example:
+
+  Given the following routes
+
+    subdomain :blog do
+      resources :posts
+    end
+
+  This no longer works
+
+    describe PostsController do
+      it "should respond to the index action" do
+        get :index # => Unknown Route
+      end
+    end
+
+  You now need to include the appropriate subdomain param
+
+    describe PostsController do
+      it "should respond to the index action" do
+        get :index, :subdomain => 'blog'
+      end
+    end
+
+  to make this easier we've added a default_params hash that is reverse merged into your params so you can again do this:
+
+    describe PostsController do
+      before do
+        default_params[:subdomain] = 'www'
+      end
+
+      it "should respond to the index action" do
+        get :index
+      end
+    end
