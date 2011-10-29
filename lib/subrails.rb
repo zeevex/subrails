@@ -14,7 +14,7 @@ class ActionDispatch::Routing::RouteSet
   def url_for_with_subdomain_support options={}
     options ||= {}
     if options.kind_of?(Hash) && options.has_key?(:subdomain)
-      subdomain = options.delete(:subdomain)
+      subdomain = options[:subdomain]
       host      = options[:host] || default_url_options[:host]
       domain    = host.split('.').last(1 + TLD_SIZE).join('.')
       options[:host] = subdomain.present? ? "#{subdomain}.#{domain}" : domain
