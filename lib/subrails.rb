@@ -84,18 +84,3 @@ module ActionDispatch::Routing::Mapper::Subdomains
   ActionDispatch::Routing::Mapper.send :include, self
 
 end
-
-
-module ActionController::UrlOptionsWithoutSubdomain
-
-  # this removes subdomain from the _path_segments section of url_options
-  # which is merged into the options passed to url_for in ActionController::Base
-  #
-  # having subdomain in the _path_segments seems to break a lot of url_helpers
-  def url_options
-    super.tap{|hash| hash[:_path_segments].delete(:subdomain) }
-  end
-
-  ActionController::Base.send(:include, self)
-
-end
