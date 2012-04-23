@@ -63,7 +63,11 @@ module ActionDispatch::Routing::Mapper::Subdomains
       params = [req.symbolized_path_parameters]
       params << req if path_proc.arity > 1
 
-      uri = URI.parse(path_proc.call(*params))
+      begin
+        uri = URI.parse(path_proc.call(*params))
+      rescue URI::InvalidURIError => e
+        raise ActionController::RoutingError, e.message
+      end
       uri.scheme  ||= req.scheme
       uri.host    ||= req.host
       uri.subdomain = options[:subdomain] if options.has_key?(:subdomain)
