@@ -1,25 +1,22 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "subrails/version"
+require File.expand_path('../lib/subrails/version', __FILE__)
 
-Gem::Specification.new do |s|
-  s.name        = "subrails"
-  s.version     = Subrails::VERSION
-  s.authors     = ["Jared Grippe"]
-  s.email       = ["jared@change.org"]
-  s.homepage    = "http://github.com/change/subrails"
-  s.summary     = %q{Adding better subdomain support to rails}
-  s.description = %q{Adding better subdomain support to rails}
+Gem::Specification.new do |gem|
+  gem.authors       = ["Jared Grippe"]
+  gem.email         = ["jared@change.org"]
+  gem.description   = %q{Better subdomain support for Rails.}
+  gem.summary       = %q{Better subdomain support for Rails.}
+  gem.homepage      = "https://github.com/change/subrails"
 
-  s.rubyforge_project = "subrails"
+  gem.files         = `git ls-files`.split($\)
+  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.name          = "subrails"
+  gem.require_paths = ["lib"]
+  gem.version       = Subrails::VERSION
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  gem.add_runtime_dependency "rails", "~> 3.0.0"
+  gem.add_runtime_dependency "uri-subdomain"
 
-  # specify any dependencies here; for example:
-  s.add_development_dependency "rake"
-  s.add_runtime_dependency "rails",         "~> 3.0.0"
-  s.add_runtime_dependency "uri-subdomain"
+  gem.add_development_dependency "rake"
 end
