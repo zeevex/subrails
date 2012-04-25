@@ -1,6 +1,6 @@
 require "spec_helper"
 
 feature Subrails do
-  pending "New domain syntax" do
+  describe "Routing syntax" do
   end
 end

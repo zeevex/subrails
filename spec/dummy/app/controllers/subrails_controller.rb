@@ -1,0 +1,2 @@
+class SubrailsController < ApplicationController
+end
