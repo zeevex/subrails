@@ -19,4 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "uri-subdomain"
 
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "capybara"
 end
