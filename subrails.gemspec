@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   s.add_development_dependency "rake"
-  s.add_runtime_dependency "rails",         "~> 3.0.0"
+  s.add_runtime_dependency "rails",         "~> 3.0"
   s.add_runtime_dependency "uri-subdomain"
 end
