@@ -34,7 +34,7 @@ module ActionDispatch::Routing::Mapper::Subdomains
     subdomains = subdomains.map(&:to_s)
 
     if subdomains.length == 1
-      constraints(:subdomain => subdomains.first) do
+      constraints(:subdomain => /^#{subdomains.first}$/) do
         defaults(:subdomain => subdomains.first) do
           yield
         end
