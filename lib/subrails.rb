@@ -19,6 +19,7 @@ class ActionDispatch::Routing::RouteSet
       domain    = host.split('.').last(1 + TLD_SIZE).join('.')
       options[:host] = subdomain.present? ? "#{subdomain}.#{domain}" : domain
     end
+    options.delete(:subdomain)
     url_for_without_subdomain_support(options)
   end
 
