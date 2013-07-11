@@ -2,11 +2,26 @@ require "subrails/version"
 require 'action_dispatch/routing/mapper'
 require 'uri-subdomain'
 
-
-class ActionDispatch::Routing::RouteSet
-
+module Subrails
   TLD_SIZE = 1
 
+  mattr_accessor :subdomain_stripper
+  mattr_accessor :tld_size
+
+  def self.strip_subdomain(host)
+    return host if host.blank?
+
+    if self.subdomain_stripper
+      self.subdomain_stripper.call(host)
+    else
+      host.split('.').last(1 + self.tld_size).join('.')
+    end
+  end
+
+  self.tld_size = 1
+end
+
+class ActionDispatch::Routing::RouteSet
   # this adds support for
   #   url_for(…, :subdomain => nil)
   #   url_for(…, :subdomain => 'www')
@@ -16,7 +31,7 @@ class ActionDispatch::Routing::RouteSet
     if options.kind_of?(Hash) && options.has_key?(:subdomain)
       subdomain = options[:subdomain]
       host      = options[:host] || default_url_options[:host]
-      domain    = host.split('.').last(1 + TLD_SIZE).join('.')
+      domain    = Subrails.strip_subdomain(host)
       options[:host] = subdomain.present? ? "#{subdomain}.#{domain}" : domain
     end
     options.delete(:subdomain)
