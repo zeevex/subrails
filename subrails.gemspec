@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["jared@change.org"]
   s.homepage    = "http://github.com/change/subrails"
   s.summary     = %q{Adding better subdomain support to rails}
-  s.description = %q{Adding better subdomain support to rails}
+  s.description = %q{Adding better subdomain support to rails - forked by Zeevex}
 
   s.rubyforge_project = "subrails"
 
